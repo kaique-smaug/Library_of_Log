@@ -1,3 +1,5 @@
+Em andamento: irei alimentar esse repósitorio constantemente ao decorrer do tempo.
+
 LoggerSetup Class
 Descrição
 A classe LoggerSetup é uma ferramenta para configuração e uso de logs em Python. Ela permite que você configure o local de armazenamento dos logs, o nome do arquivo de log, o nome do logger, além de facilitar a criação de mensagens de log em diferentes níveis (DEBUG, INFO, ERROR, WARNING).
