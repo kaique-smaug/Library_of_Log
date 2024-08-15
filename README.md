@@ -1,4 +1,4 @@
-Em andamento: irei alimentar esse repósitorio constantemente ao decorrer do tempo.
+Em andamento: irei alimentar esse repósitorio constantemente ao passar do tempo.
 
 LoggerSetup Class
 Descrição
