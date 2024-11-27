@@ -36,3 +36,6 @@ errorMessage(message, level): Registra uma mensagem de nível ERROR.
 Requisitos
 Python 3.x
 Módulos: logging, sys, os
+
+Autor: Kaique Batista Ramos
+Versão: 1.1.5
