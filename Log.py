@@ -1,77 +1,71 @@
-__version__ = '1.1.5'
-"""
-    Import all libraries that are being used in the script.
-"""
 import logging
 import os
 
 class LoggerSetup:
-    '''
-        Define the constructor method that will receive:
-        - pathLog: The path where the log file will be stored.
-        - nameLog: The name of the log file.
-        - nameLogger: The name of the logger that will be used throughout the system.
-    '''
+    """
+    Logger setup class for handling log messages.
+
+    Attributes:
+        _pathLog (str): The directory where the log file will be stored.
+        _nameLog (str): The name of the log file.
+        _nameLogger (str): The name of the logger.
+    """
 
     def __init__(self, pathLog, nameLog, nameLogger):
-        # Initialize instance variables with the provided parameters
+        """
+        Initializes the LoggerSetup with the given log path, file name, and logger name.
+
+        Args:
+            pathLog (str): Path to the directory where the log file will be saved.
+            nameLog (str): Name of the log file.
+            nameLogger (str): Name of the logger instance.
+        """
         self._pathLog = pathLog
         self._nameLog = nameLog
         self._nameLogger = nameLogger
+        self._logger = self._setup_logger()
 
-    '''
-        Define the basic standard configuration for logging:
-        - Set up basic logging configurations.
-        - Create and configure the formatter for log messages.
-        - Determine the path where the log file will be stored.
-        - Create a logger with the name provided by the user.
-        - Create a file handler to write log messages to the log file.
-    '''
+    def _setup_logger(self):
+        """
+        Configures the logger, including log format, file path, and log level.
 
-    def _setup_logger(self, levellOG: str = None):
-        # Configure basic logging settings, including log level and format
-        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
-        # Create and configure the formatter that defines the structure of log messages
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-        # Combine the log file name and path to get the full path where the log will be stored
+        Returns:
+            logging.Logger: Configured logger instance.
+        """
         log_path = os.path.join(self._pathLog, self._nameLog)
 
-        # Create a logger instance with the specified name
+        # Create logger
         logger = logging.getLogger(self._nameLogger)
-        logger.setLevel(logging.DEBUG)  # Set the logging level to DEBUG by default
 
-        # Create a file handler to write log messages to a file
-        file_handler = logging.FileHandler(log_path)
+        # Prevent duplicate handlers
+        if not logger.handlers:
+            logger.setLevel(logging.DEBUG)  # Default level
 
-        # Convert the string level to the corresponding logging level (e.g., "INFO" to logging.INFO)
-        level = getattr(logging, levellOG.upper(), logging.DEBUG)
-        file_handler.setLevel(level)
-        file_handler.setFormatter(formatter)  # Apply the formatter to the file handler
+            # Create file handler
+            file_handler = logging.FileHandler(log_path)
+            file_handler.setLevel(logging.DEBUG)
 
-        # Add the file handler to the logger so that logs are written to the file
-        logger.addHandler(file_handler)
+            # Define log format
+            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            file_handler.setFormatter(formatter)
+
+            # Add handler to logger
+            logger.addHandler(file_handler)
 
         return logger
 
-    # Create functions to log messages with different levels
-    def debugMessage(self, message, level):
-        # Set up the logger and log a message at the DEBUG level
-        self._logger = self._setup_logger(level)
+    def debugMessage(self, message):
+        """Logs a debug message."""
         self._logger.debug(message)
 
-    def infoMessage(self, message, level):
-        # Set up the logger and log a message at the INFO level
-        self._logger = self._setup_logger(level)
+    def infoMessage(self, message):
+        """Logs an info message."""
         self._logger.info(message)
 
-    def errorMessage(self, message, level):
-        # Set up the logger and log a message at the ERROR level
-        self._logger = self._setup_logger(level)
+    def errorMessage(self, message):
+        """Logs an error message."""
         self._logger.error(message)
 
-    def warningMessage(self, message, level):
-        # Set up the logger and log a message at the WARNING level
-        self._logger = self._setup_logger(level)
+    def warningMessage(self, message):
+        """Logs a warning message."""
         self._logger.warning(message)
