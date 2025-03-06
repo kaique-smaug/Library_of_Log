@@ -1,3 +1,5 @@
+__version__ = '1.1.5'
+
 import logging
 import os
 
